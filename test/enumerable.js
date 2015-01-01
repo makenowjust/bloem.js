@@ -151,6 +151,84 @@ describe('bloem', function () {
       });
     });
 
+    describe('#reduce', function () {
+      it('should return a hoos.', function () {
+        expect(bloem.reduce(function () { })).to.be.an.instanceof(bloem.Hoos);
+      });
+
+      it('should be called by each values excepting error.', function (done) {
+        var
+        data = [['test1'], ['test2']], i = 0,
+        error = ['error'],
+        pomp = bloem.Pomp(),
+        reduce = bloem.reduce(function (_, result) {
+          expect(result).to.equal(data[i++]);
+          if (i === data.length) {
+            done();
+          }
+          return result;
+        });
+        pomp.connect(reduce);
+        pomp.send(data[0]);
+        pomp.raise(error);
+        pomp.send(data[1]);
+      });
+
+      it('default `init\' is `undefine\'.', function (done) {
+        var
+        data = ['test'],
+        pomp = bloem.Pomp(),
+        reduce = bloem.reduce(function (init) {
+          expect(init).to.be.undefined;
+          done();
+          return init;
+        });
+        pomp.connect(reduce);
+        pomp.send(data);
+      });
+
+      it('should apply and reduce each results.', function (done) {
+        var
+        pomp = bloem.fromArray([2, 4]), results = [2, 6], i = 0,
+        reduce = bloem.reduce(function (sum, i) {
+          return sum + i;
+        }, 0),
+        tuin = bloem.Tuin(function (error, result) {
+          expect(error).to.be.null;
+          expect(result).to.equal(results[i++]);
+          if (i >= results.length) {
+            done();
+          }
+        });
+        pomp.connect(reduce).connect(tuin);
+      });
+
+      it('should call as async.', function (done) {
+        var
+        pomp = bloem.fromArray([0, 4]), results = [0, 4], i = 0,
+        err = ['error'], i = 0,
+        reduce = bloem.reduce(function (sum, i, next) {
+          setTimeout(function () {
+            if (i === 0) {
+              next(err);
+            } else {
+              next(null, sum + i);
+            }
+          }, 0);
+        }, 0),
+        tuin = bloem.Tuin(function (error, result) {
+          if (i++ === 0) {
+            expect(error).to.equal(err);
+          } else {
+            expect(error).to.be.null;
+            expect(result).to.equal(results[i-1]);
+            done();
+          }
+        });
+        pomp.connect(reduce).connect(tuin);
+      });
+    });
+
   });
 
 });
