@@ -69,7 +69,7 @@ tuin = hoos.connect(logger);
 ##TODO
 
   - [ ] make a document
-  - [ ] covers all api with tests
+  - [x] covers all api with tests
   - [x] start CI test
   - [ ] start a browser test
 
