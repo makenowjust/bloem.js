@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "cover": "istanbul"
+    "cover": "istanbul cover _mocha"
   },
   "devDependencies": {
     "chai": "^1.10.0",
