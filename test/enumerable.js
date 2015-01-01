@@ -394,25 +394,29 @@ describe('bloem', function () {
 
       it('should call passed function, and seprate process by its result.', function (done) {
         var
-        i = 0, sendValue = [true, false, 1, 0, null, 'ok', '', {}],
+        i = 0, j = 0, sendValue = [true, false, 1, 0, null, 'ok', '', {}],
         pomp = bloem.Pomp(),
         when = bloem.when(function cond(data) {
+          if (j++ >= sendValue.length) {
+            throw ['error'];
+          }
           return data;
         }, function then(data) {
           expect(data).to.be.ok;
-          if (i++ >= sendValue.length) {
+          if (++i >= sendValue.length) {
             done();
           }
           return data;
         }, function otherwise(data) {
           expect(data).not.to.be.ok;
-          if (i++ >= sendValue.length) {
+          if (++i >= sendValue.length) {
             done();
           }
           return data;
         });
         pomp.connect(when);
         sendValue.forEach(pomp.send, pomp);
+        pomp.send('others');
         pomp.raise(['error']);
       });
     });

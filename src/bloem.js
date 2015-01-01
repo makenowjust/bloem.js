@@ -201,7 +201,7 @@ bloem.use = function use(mixin, bloemExtendFlag) {
 // creator functions of bloem namespace
 
 bloem.identity = function identity() {
-  return new Hoos(function (error, data, next) {
+  return new Hoos(function handler(error, data, next) {
     next(error, data);
   });
 };
@@ -286,7 +286,7 @@ Enumerable.flatMap = function flatMap(iter) {
 
   return new Hoos(function handler(error, data, next) {
     if (error) return next(error);
-    iter(data, function (error, target) {
+    iter(data, function flatMapNext(error, target) {
       if (error) return next(error);
       target.connect(new Hoos(next));
     });
@@ -307,6 +307,24 @@ Enumerable.rescue = function rescue(iter, dataNextFlag) {
     } else if (dataNextFlag) {
       next(null, data);
     }
+  });
+};
+
+Enumerable.when = function when(cond, then, otherwise) {
+  cond = wrapIter(cond);
+  then = wrapIter(then);
+  otherwise = wrapIter(otherwise);
+
+  return new Hoos(function handler(error, data, next) {
+    if (error) return next(error);
+    cond(data, function whenNext(error, condition) {
+      if (error) return next(error);
+      if (condition) {
+        then(data, next);
+      } else {
+        otherwise(data, next);
+      }
+    });
   });
 };
 
