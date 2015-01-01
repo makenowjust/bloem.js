@@ -38,7 +38,6 @@ describe('bloem', function () {
       expect(pomp).to.respondTo('connect');
     });
 
-    
     describe('#sendAndRaiseSync', function () {
       var
       tuins, n = 10;

@@ -40,13 +40,13 @@ describe('bloem', function () {
       expect(bloem.use({})).to.equal(bloem);
     });
 
-    it('should mix specified object to Pump and Hoos.', function () {
+    it('should mix specified object to Pomp and Hoos.', function () {
       bloem.use(mixin);
       expect(bloem.Pomp.prototype).to.have.property('__test');
       expect(bloem.Hoos.prototype).to.have.property('__test');
     });
 
-    it('should mix specified object to Pump and Hoos and bloem, setting `extendBloemFlag\'.', function () {
+    it('should mix specified object to Pomp and Hoos and bloem, setting `extendBloemFlag\'.', function () {
       bloem.use(mixin, true);
       expect(bloem).to.have.property('__test', true);
     });
