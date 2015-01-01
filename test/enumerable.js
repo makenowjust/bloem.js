@@ -262,6 +262,72 @@ describe('bloem', function () {
         pomp.send(1);
       });
     });
+
+    describe('#flatMap', function () {
+      it('should return a hoos.', function () {
+        expect(bloem.flatMap(function () { })).to.be.an.instanceof(bloem.Hoos);
+      });
+
+      it('should be called by each values excepting error.', function (done) {
+        var
+        data = [['test1'], ['test2']], i = 0,
+        error = ['error'],
+        pomp = bloem.Pomp(),
+        flatMap = bloem.flatMap(function (result) {
+          expect(result).to.equal(data[i++]);
+          if (i >= data.length) {
+            done();
+          }
+          return new bloem.Pomp();
+        });
+        pomp.connect(flatMap);
+        pomp.send(data[0]);
+        pomp.raise(error);
+        pomp.send(data[1]);
+      });
+
+      it('should apply and return each values.', function (done) {
+        var
+        data = [['test1'], ['test2']], i = 0,
+        pomp = bloem.fromArray([0, 1]),
+        flatMap = bloem.flatMap(function (i) {
+          return new bloem.Pomp().send(data[i]);
+        }),
+        tuin = bloem.Tuin(function (error, result) {
+          expect(error).to.be.null;
+          expect(result).to.equal(data[i++]);
+          if (i >= data.length) {
+            done();
+          }
+        });
+        pomp.connect(flatMap).connect(tuin);
+      });
+
+      it('should call as async.', function (done) {
+        var
+        err = ['error'], i = 0,
+        pomp = bloem.fromArray([0, 1]),
+        flatMap = bloem.flatMap(function (i, next) {
+          setTimeout(function () {
+            if (i === 0) {
+              next(err);
+            } else {
+              next(null, new bloem.Pomp().send(i));
+            }
+          }, 0);
+        }),
+        tuin = bloem.Tuin(function (error, result) {
+          if (i++ === 0) {
+            expect(error).to.equal(err);
+          } else {
+            expect(error).to.be.null;
+            expect(result).to.equal(1);
+            done();
+          }
+        });
+        pomp.connect(flatMap).connect(tuin);
+      });
+    });
   });
 
 });
