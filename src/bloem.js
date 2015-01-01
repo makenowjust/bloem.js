@@ -1,6 +1,6 @@
 // bloem.js - Processing events and actions like Gardening in JavaScript.
 
-// Copyright 2014 TSUYUSATO Kitsune 
+// Copyright 2014-2015 TSUYUSATO Kitsune 
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
