@@ -385,6 +385,37 @@ describe('bloem', function () {
         pomp.send(1);
       });
     });
+
+    describe('#when', function () {
+      it('should return a hoos.', function () {
+        expect(bloem.when(function cond() { }, function then() { }, function otherwise() { }))
+          .to.be.an.instanceof(bloem.Hoos);
+      });
+
+      it('should call passed function, and seprate process by its result.', function (done) {
+        var
+        i = 0, sendValue = [true, false, 1, 0, null, 'ok', '', {}],
+        pomp = bloem.Pomp(),
+        when = bloem.when(function cond(data) {
+          return data;
+        }, function then(data) {
+          expect(data).to.be.ok;
+          if (i++ >= sendValue.length) {
+            done();
+          }
+          return data;
+        }, function otherwise(data) {
+          expect(data).not.to.be.ok;
+          if (i++ >= sendValue.length) {
+            done();
+          }
+          return data;
+        });
+        pomp.connect(when);
+        sendValue.forEach(pomp.send, pomp);
+        pomp.raise(['error']);
+      });
+    });
   });
 
 });
