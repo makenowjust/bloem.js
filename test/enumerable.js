@@ -40,7 +40,7 @@ describe('bloem', function () {
         pomp = bloem.Pomp(),
         map = bloem.map(function (result) {
           expect(result).to.equal(data[i++]);
-          if (i === data.length) {
+          if (i >= data.length) {
             done();
           }
           return result;
@@ -61,7 +61,7 @@ describe('bloem', function () {
         tuin = bloem.Tuin(function (error, result) {
           expect(error).to.be.null;
           expect(result).to.equal(data[i++]);
-          if (i === data.length) {
+          if (i >= data.length) {
             done();
           }
         });
@@ -80,7 +80,7 @@ describe('bloem', function () {
         tuin = bloem.Tuin(function (error, result) {
           expect(error).to.be.null;
           expect(result).to.equal(data[i++]);
-          if (i === data.length) {
+          if (i >= data.length) {
             done();
           }
         });
@@ -100,7 +100,7 @@ describe('bloem', function () {
         pomp = bloem.Pomp(),
         filter = bloem.filter(function (result) {
           expect(result).to.equal(data[i++]);
-          if (i === data.length) {
+          if (i >= data.length) {
             done();
           }
           return result;
@@ -163,7 +163,7 @@ describe('bloem', function () {
         pomp = bloem.Pomp(),
         reduce = bloem.reduce(function (_, result) {
           expect(result).to.equal(data[i++]);
-          if (i === data.length) {
+          if (i >= data.length) {
             done();
           }
           return result;
@@ -229,6 +229,39 @@ describe('bloem', function () {
       });
     });
 
+    describe('#forEach', function () {
+      it('should return a tuin.', function () {
+        expect(bloem.forEach(function () { })).to.be.an.instanceof(bloem.Tuin);
+      });
+
+      it('should apply each values.', function (done) {
+        var
+        pomp = bloem.fromArray([0, 1]), i = 0,
+        forEach = bloem.forEach(function (data) {
+          expect(data).to.equal(i++);
+          if (i >= 2) {
+            done();
+          }
+        });
+        pomp.connect(forEach);
+      });
+
+      it('should ignore raised error.', function (done) {
+        var
+        error = ['error'],
+        pomp = bloem.Pomp(), i = 0,
+        forEach = bloem.forEach(function (data) {
+          expect(data).to.equal(i++);
+          if (i >= 2) {
+            done();
+          }
+        });
+        pomp.connect(forEach);
+        pomp.send(0);
+        pomp.raise(error);
+        pomp.send(1);
+      });
+    });
   });
 
 });
