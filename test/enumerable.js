@@ -88,6 +88,69 @@ describe('bloem', function () {
       });
     });
 
+    describe('#filter', function () {
+      it('should return a hoos.', function () {
+        expect(bloem.filter(function () { })).to.be.an.instanceof(bloem.Hoos);
+      });
+
+      it('should be called by each values excepting error.', function (done) {
+        var
+        data = [['test1'], ['test2']], i = 0,
+        error = ['error'],
+        pomp = bloem.Pomp(),
+        filter = bloem.filter(function (result) {
+          expect(result).to.equal(data[i++]);
+          if (i === data.length) {
+            done();
+          }
+          return result;
+        });
+        pomp.connect(filter);
+        pomp.send(data[0]);
+        pomp.raise(error);
+        pomp.send(data[1]);
+      });
+
+      it('should apply and filter each results.', function (done) {
+        var
+        pomp = bloem.fromArray([0, 1]),
+        filter = bloem.filter(function (i) {
+          return i === 1;
+        }),
+        tuin = bloem.Tuin(function (error, result) {
+          expect(error).to.be.null;
+          expect(result).to.equal(1);
+          done();
+        });
+        pomp.connect(filter).connect(tuin);
+      });
+
+      it('should call as async.', function (done) {
+        var
+        pomp = bloem.fromArray([0, 1]),
+        err = ['error'], i = 0,
+        filter = bloem.filter(function (i, next) {
+          setTimeout(function () {
+            if (i === 0) {
+              next(err);
+            } else {
+              next(null, true);
+            }
+          }, 0);
+        }),
+        tuin = bloem.Tuin(function (error, result) {
+          if (i++ === 0) {
+            expect(error).to.equal(err);
+          } else {
+            expect(error).to.be.null;
+            expect(result).to.equal(1);
+            done();
+          }
+        });
+        pomp.connect(filter).connect(tuin);
+      });
+    });
+
   });
 
 });
