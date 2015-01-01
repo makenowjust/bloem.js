@@ -9,10 +9,12 @@
   "bugs": "https://github.com/MakeNowJust/bloem.js/issues",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "cover": "istanbul"
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "istanbul": "^0.3.5",
     "mocha": "^2.0.1"
   }
 }
