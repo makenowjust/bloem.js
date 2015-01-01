@@ -24,6 +24,7 @@ var
 bloem; // namespace
 
 // if Node.js or Browserify
+/* istanbul ignore else */
 if (typeof module !== 'undefined' && 'exports' in module) {
   bloem = module.exports;
 
@@ -35,7 +36,7 @@ if (typeof module !== 'undefined' && 'exports' in module) {
 
 // utility function
 var
-setImmediate = typeof global.setImmediate === 'function' ? global.setImmediate : function setImmediatePolyfill(fn) {
+setImmediate = typeof global.setImmediate === 'function' ? global.setImmediate : /* istanbul ignore next */ function setImmediatePolyfill(fn) {
   return setTimeout(fn, 0);
 };
 
@@ -316,4 +317,4 @@ bloem.use(Enumerable, true);
 bloem.Enumerable = Enumerable;
 
 
-})((this || 0).self || global);
+})((this || /* istanbul ignore next */ 0).self || global);
