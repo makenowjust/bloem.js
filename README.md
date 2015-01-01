@@ -4,7 +4,7 @@ Processing events and actions like Gardening in JavaScript.
 
 ##bloem?
 
-__bloem__ means _flower_ in Dutch.  So, this library provide gradening like programming.
+__bloem__ in Dutch means _flower_ in English.  So, this library provide gradening like programming.
 
 
 ##Let's install!
