@@ -1,4 +1,4 @@
-#bloem.js
+#bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js)
 
 Processing events and actions like Gardening in JavaScript.
 
@@ -70,7 +70,7 @@ tuin = hoos.connect(logger);
 
   - [ ] make a document
   - [ ] covers all api with tests
-  - [ ] start CI test
+  - [x] start CI test
 
 
 ##License
