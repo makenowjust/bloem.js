@@ -328,6 +328,63 @@ describe('bloem', function () {
         pomp.connect(flatMap).connect(tuin);
       });
     });
+
+    describe('#rescue', function () {
+      it('should return a hoos.', function () {
+        expect(bloem.rescue()).to.be.an.instanceof(bloem.Hoos);
+      });
+
+      it('should return a error hoos, if passed no arguments.', function (done) {
+        var
+        pomp = bloem.Pomp(),
+        rescue = bloem.rescue(),
+        err = ['error'],
+        tuin = bloem.Tuin(function (error, data) {
+          expect(error).to.be.null;
+          expect(data).to.equal(err);
+          done();
+        });
+        pomp.connect(rescue).connect(tuin);
+        pomp.send(1);
+        pomp.raise(err);
+      });
+
+      it('should return a error mapper, if passed a argument.', function (done) {
+        var
+        errors = [['error1'], ['error2']], i = 0,
+        pomp = bloem.Pomp(),
+        rescue = bloem.rescue(function (i) {
+          return errors[i];
+        }),
+        tuin = bloem.Tuin(function (error, data) {
+          expect(error).to.be.null;
+          expect(data).to.equal(errors[i++]);
+          if (i >= errors.length) {
+            done();
+          }
+        });
+        pomp.connect(rescue).connect(tuin);
+        pomp.raise(0);
+        pomp.raise(1);
+      });
+
+      it('is set `dataNextFlag\', it should return a error mapper sending data.', function (done) {
+        var
+        error = ['error'], results = [error, 1], i = 0,
+        pomp = bloem.Pomp(),
+        rescue = bloem.rescue(null, true),
+        tuin = bloem.Tuin(function (error, data) {
+          expect(error).to.be.null;
+          expect(data).to.equal(results[i++]);
+          if (i >= results.length) {
+            done();
+          }
+        });
+        pomp.connect(rescue).connect(tuin);
+        pomp.raise(error);
+        pomp.send(1);
+      });
+    });
   });
 
 });

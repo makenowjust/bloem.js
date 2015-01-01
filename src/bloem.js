@@ -16,13 +16,26 @@
 
 
 (function defineBloem(
-  bloem // namespace
+  global
 ) {
 'use strict';
 
+var
+bloem; // namespace
+
+// if Node.js or Browserify
+if (typeof module !== 'undefined' && 'exports' in module) {
+  bloem = module.exports;
+
+// otherwise (Browser, WebWorker...)
+} else {
+  bloem = global.bloem = {};
+}
+
+
 // utility function
 var
-setImmediate = typeof setImmediate === 'function' ? setImmediate : function setImmediatePolyfill(fn) {
+setImmediate = typeof global.setImmediate === 'function' ? global.setImmediate : function setImmediatePolyfill(fn) {
   return setTimeout(fn, 0);
 };
 
@@ -279,18 +292,18 @@ Enumerable.flatMap = function flatMap(iter) {
   });
 };
 
-Enumerable.rescue = function rescue(iter) {
+Enumerable.rescue = function rescue(iter, dataNextFlag) {
   if (!iter) {
-    iter = function (error, next) {
+    iter = function throughIter(error, next) {
       next(null, error);
     };
   }
   iter = wrapIter(iter);
 
-  return new Hoose(function handler(error, data, next) {
-    if (error) {
+  return new Hoos(function handler(error, data, next) {
+    if (error != null) {
       iter(error, next);
-    } else {
+    } else if (dataNextFlag) {
       next(null, data);
     }
   });
@@ -303,13 +316,4 @@ bloem.use(Enumerable, true);
 bloem.Enumerable = Enumerable;
 
 
-})((function getNamespace(global) {
-  // if Node.js or Browserify
-  if (typeof module !== 'undefined' && 'exports' in module) {
-    return module.exports;
-
-  // otherwise (Browser, WebWorker...)
-  } else {
-    return global.bloem = {};
-  }
-})((this || 0).self || global));
+})((this || 0).self || global);
