@@ -1,0 +1,18 @@
+{
+  "name": "bloem.js",
+  "description": "Processing events and actions like Gardening in JavaScript.",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "author": "TSUYUSATO Kitsune <make.just.on@gmail.com>",
+  "repository": "https://github.com/MakeNowJust/bloem.js.git",
+  "homepage": "https://github.com/MakeNowJust/bloem.js",
+  "bugs": "https://github.com/MakeNowJust/bloem.js/issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1"
+  }
+}
