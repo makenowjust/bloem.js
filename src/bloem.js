@@ -299,6 +299,10 @@ Enumerable.rescue = function rescue(iter) {
 // mix Enumerable to bloem and Pomp and Hoos
 bloem.use(Enumerable, true);
 
+// export Enumerable for testing
+bloem.Enumerable = Enumerable;
+
+
 })((function getNamespace(global) {
   // if Node.js or Browserify
   if (typeof module !== 'undefined' && 'exports' in module) {
