@@ -10,7 +10,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "cover": "istanbul cover _mocha"
+    "cover": "istanbul cover _mocha --report lcov-only",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
     "chai": "^1.10.0",
