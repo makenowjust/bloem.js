@@ -13,7 +13,7 @@ __bloem__ means _flower_ in Dutch.  So, this library provide gradening like prog
 $ npm install bloem.js
 ```
 
-bower suppoer coming soon.
+bower support coming soon.
 
 ##First example
 
