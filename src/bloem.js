@@ -184,7 +184,13 @@ bloem.use = function use(mixin, bloemExtendFlag) {
   return bloem;
 };
 
-// creator functions of bolem namespace
+// creator functions of bloem namespace
+
+bloem.identity = function identity() {
+  return new Hoos(function (error, data, next) {
+    next(error, data);
+  });
+};
 
 bloem.fromArray = function fromArray(array) {
   var
@@ -201,7 +207,7 @@ bloem.fromArray = function fromArray(array) {
 
 bloem.merge = function merge() {
   var
-  hoos = new Hoos(),
+  hoos = bloem.identity(),
   i, len = arguments.length;
 
   for (i = 0; i < len; i++) {

@@ -15,7 +15,8 @@
 'use strict';
 
 var
-expect = require('chai').expect;
+chai = require('chai'),
+expect = chai.expect;
 
 var
 bloem = require('..');
@@ -92,6 +93,74 @@ describe('bloem', function () {
 
     it('should return wrapped, if passed function object that\'s length is less than `baseLength\'.', function () {
       expect(bloem.wrapIter(twoArgumentsFunction, 2)).not.to.equal(twoArgumentsFunction);
+    });
+  });
+
+  describe('.identity', function () {
+    it('should return new hoos', function () {
+      expect(bloem.identity()).to.be.an.instanceof(bloem.Hoos);
+      expect(bloem.identity()).not.to.equal(bloem.identity());
+    });
+  });
+
+  describe('.fromArray', function () {
+    it('should return frozen hoos if passed empty array.', function () {
+      var
+      hoos = bloem.fromArray([]);
+      hoos.forEach(function () {
+        chai.fail('can\'t call!');
+      });
+    });
+
+    it('should return each elements sending hoos.', function (done) {
+      var
+      data = [1,2,3], i = 0,
+      hoos = bloem.fromArray(data);
+      hoos.forEach(function (result) {
+        expect(result).to.equal(data[i++]);
+        if (i === data.length) {
+          done();
+        }
+      });
+    });
+  });
+
+  describe('.merge', function () {
+    it('should return frozen hoos if passed no argument.', function () {
+      var
+      hoos = bloem.merge();
+      hoos.forEach(function () {
+        chai.fail('can\'t call!');
+      });
+    });
+
+    it('should return a same meaning hoos if passed a argument.', function (done) {
+      var
+      data = ['test'],
+      pomp = bloem.Pomp(),
+      hoos = bloem.merge(pomp);
+      hoos.forEach(function (result) {
+        expect(result).to.equal(data);
+        done();
+      });
+
+      pomp.send(data);
+    });
+
+    it('should merge each hoses.', function (done) {
+      var
+      data = [['test1'], ['test2']], i = 0,
+      pomp1 = new bloem.Pomp(), pomp2 = new bloem.Pomp(),
+      hoos = bloem.merge(pomp1, pomp2);
+      hoos.forEach(function (result) {
+        expect(result).to.equal(data[i++]);
+        if (i === data.length) {
+          done();
+        }
+      });
+
+      pomp2.send(data[0]);
+      pomp1.send(data[1]);
     });
   });
 
