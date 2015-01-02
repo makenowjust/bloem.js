@@ -1,4 +1,4 @@
-#bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js) [![Coverage Status](https://coveralls.io/repos/MakeNowJust/bloem.js/badge.png?branch=master)](https://coveralls.io/r/MakeNowJust/bloem.js?branch=master)
+#bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js) [![Coverage Status](https://coveralls.io/repos/MakeNowJust/bloem.js/badge.png?branch=master)](https://coveralls.io/r/MakeNowJust/bloem.js?branch=master) [![npm version](https://badge.fury.io/js/bloem.js.svg)](https://www.npmjs.com/package/bloem.js) 
 
 Processing events and actions like Gardening in JavaScript.
 
