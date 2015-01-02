@@ -10,10 +10,10 @@ __bloem__ in Dutch means _flower_ in English.  So, this library provide gradenin
 ##Let's install!
 
 ```console
-$ npm install bloem.js
+$ npm install --save bloem.js
+or
+$ bower install --save bloem.js
 ```
-
-bower support coming soon.
 
 ##First example
 
