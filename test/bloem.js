@@ -61,6 +61,9 @@ describe('bloem', function () {
       }
       return a;
     }
+    function twoResultsFunction(a) {
+      return [a, a];
+    }
     var
     wrappedFunction = bloem.wrapIter(oneArgumentsFunction);
 
@@ -93,6 +96,20 @@ describe('bloem', function () {
 
     it('should return wrapped, if passed function object that\'s length is less than `baseLength\'.', function () {
       expect(bloem.wrapIter(twoArgumentsFunction, 2)).not.to.equal(twoArgumentsFunction);
+    });
+
+    it('should return wrapped, if `resultLength\' same or greater than 2.', function () {
+      expect(bloem.wrapIter(twoResultsFunction, 1, 2)).not.to.equal(twoResultsFunction);
+    });
+
+    it('should wrap function, call `next\' with filling returned array.', function () {
+      var
+      data = ['test'];
+      bloem.wrapIter(twoResultsFunction, 1, 2)(data, function (error, data1, data2) {
+        expect(error).to.be.null;
+        expect(data1).to.equal(data);
+        expect(data2).to.equal(data);
+      });
     });
   });
 
