@@ -163,8 +163,10 @@ bloem.Tuin = Tuin;
 
 var
 slice = Array.prototype.slice,
-wrapIter = bloem.wrapIter = function wrapIter(iter, baseLength) {
+wrapIter = bloem.wrapIter = function wrapIter(iter, baseLength, resultLength) {
   baseLength = baseLength == null ? 1 : baseLength;
+  resultLength = resultLength == null ? 1 : resultLength;
+
   return iter.length > baseLength ? iter :
     function wrappedIter() {
       var
@@ -178,7 +180,12 @@ wrapIter = bloem.wrapIter = function wrapIter(iter, baseLength) {
       } catch (error) {
         return next(error);
       }
-      next(null, result);
+      
+      if (resultLength <= 1) {
+        next(null, result);
+      } else {
+        next.apply(null, [null].concat(result));
+      }
     };
 };
 
@@ -324,6 +331,37 @@ Enumerable.when = function when(cond, then, otherwise) {
       } else {
         otherwise(data, next);
       }
+    });
+  });
+};
+
+// see https://hackage.haskell.org/package/machines-0.4.1/docs/Data-Machine-Moore.html
+Enumerable.moore = function moore(iter, state) {
+  iter = wrapIter(iter, 1, 2);
+
+  return new Hoos(function handler(error, data, next) {
+    if (error) return next(error);
+    iter(state, function mooreNext(error, result, updateIter) {
+      if (error) return next(error);
+      wrapIter(updateIter)(data, function mooreNext2(error, update) {
+        if (error) return next(error);
+        state = update;
+        next(null, result);
+      });
+    });
+  });
+};
+
+// see https://hackage.haskell.org/package/machines-0.4.1/docs/Data-Machine-Mealy.html
+Enumerable.mealy = function mealy(iter, state) {
+  iter = wrapIter(iter, 2, 2);
+
+  return new Hoos(function handler(error, data, next) {
+    if (error) return next(error);
+    iter(state, data, function mealyNext(error, data, update) {
+      if (error) return next(error);
+      state = update;
+      next(null, data);
     });
   });
 };
