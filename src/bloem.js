@@ -335,37 +335,6 @@ Enumerable.when = function when(cond, then, otherwise) {
   });
 };
 
-// see https://hackage.haskell.org/package/machines-0.4.1/docs/Data-Machine-Moore.html
-Enumerable.moore = function moore(iter, state) {
-  iter = wrapIter(iter, 1, 2);
-
-  return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
-    iter(state, function mooreNext(error, result, updateIter) {
-      if (error) return next(error);
-      wrapIter(updateIter)(data, function mooreNext2(error, update) {
-        if (error) return next(error);
-        state = update;
-        next(null, result);
-      });
-    });
-  });
-};
-
-// see https://hackage.haskell.org/package/machines-0.4.1/docs/Data-Machine-Mealy.html
-Enumerable.mealy = function mealy(iter, state) {
-  iter = wrapIter(iter, 2, 2);
-
-  return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
-    iter(state, data, function mealyNext(error, data, update) {
-      if (error) return next(error);
-      state = update;
-      next(null, data);
-    });
-  });
-};
-
 // mix Enumerable to bloem and Pomp and Hoos
 bloem.use(Enumerable, true);
 
