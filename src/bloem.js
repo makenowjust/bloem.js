@@ -335,6 +335,23 @@ Enumerable.when = function when(cond, then, otherwise) {
   });
 };
 
+Enumerable.reduceMap = function (iter, init) {
+  iter = wrapIter(iter, 2, 2);
+
+  var
+  state = init;
+
+  return new Hoos(function handler(error, data, next) {
+    if (error) return next(error);
+    iter(state, data, function iterNext(error, update, result) {
+      if (error) return next(error);
+      state = update;
+      next(null, result);
+    });
+  });
+};
+
+
 // mix Enumerable to bloem and Pomp and Hoos
 bloem.use(Enumerable, true);
 
