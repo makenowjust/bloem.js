@@ -53,8 +53,8 @@ function Connecter() {
 
 // methods of class Connecter
 
-Connecter.inherits = function inherits(ctor) {
-  ctor.prototype = Object.create(Connecter.prototype, {
+Connecter.inherits = function inherits(ctor, proto) {
+  ctor.prototype = Object.create(proto || Connecter.prototype, {
     constructor: {
       value: ctor,
       enumerable: false,
@@ -132,6 +132,43 @@ Hoos.prototype.onData = function onData(error, data) {
     this._targets.forEach(function loop(target) {
       target.onData(error, data);
     });
+  }.bind(this));
+};
+
+
+// class SeqHoos
+// Sequential Hoos.
+
+function SeqHoos(handler) {
+  if (!(this instanceof SeqHoos)) return new SeqHoos(handler);
+  Connecter.call(this);
+
+  this._handler = handler;
+  this._queue = [];
+}
+
+Connecter.inherits(SeqHoos, Hoos.prototype);
+
+// methods of class SeqHoos
+
+SeqHoos.prototype.onData = function onData(error, data) {
+  this._queue.push([error, data]);
+
+  if (this._queue.length === 1) {
+    this._sendData();
+  }
+};
+
+SeqHoos.prototype._sendData = function _sendData() {
+  this._handler(this._queue[0][0], this._queue[0][1], function next(error, data) {
+    this._targets.forEach(function loop(target) {
+      target.onData(error, data);
+    });
+
+    this._queue.shift();
+    if (this._queue.length >= 1) {
+      this._sendData();
+    }
   }.bind(this));
 };
 
