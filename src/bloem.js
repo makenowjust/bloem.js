@@ -193,6 +193,7 @@ Tuin.prototype.onData = function onData(error, data) {
 bloem.Connecter = Connecter;
 bloem.Pomp = Pomp;
 bloem.Hoos = Hoos;
+bloem.SeqHoos = SeqHoos;
 bloem.Tuin = Tuin;
 
 
