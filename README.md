@@ -1,16 +1,16 @@
 bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js) [![Coverage Status](https://coveralls.io/repos/MakeNowJust/bloem.js/badge.png?branch=master)](https://coveralls.io/r/MakeNowJust/bloem.js?branch=master) [![npm version](https://badge.fury.io/js/bloem.js.svg)](https://www.npmjs.com/package/bloem.js)
-= = =
+===
 
 Processing events and actions like Gardening in JavaScript.
 
 bloem?
-- - -
+---
 
 __bloem__ in Dutch means _flower_ in English.  So, this library provide gradening like programming.
 
 
 Let's install!
-- - -
+---
 
 ```console
 $ npm install --save bloem.js
@@ -19,7 +19,7 @@ $ bower install --save bloem.js
 ```
 
 First example
-- - -
+---
 
 ```javascript
 var
@@ -71,7 +71,7 @@ tuin = hoos.connect(logger);
 ```
 
 TODO
-- - -
+---
 
   - [ ] make a document
   - [x] covers all api with tests
@@ -80,7 +80,7 @@ TODO
 
 
 License
-- - -
+---
 
 ```
 Copyright 2014-2015 TSUYUSATO Kitsune
