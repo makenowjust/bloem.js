@@ -1,13 +1,16 @@
-#bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js) [![Coverage Status](https://coveralls.io/repos/MakeNowJust/bloem.js/badge.png?branch=master)](https://coveralls.io/r/MakeNowJust/bloem.js?branch=master) [![npm version](https://badge.fury.io/js/bloem.js.svg)](https://www.npmjs.com/package/bloem.js) 
+bloem.js [![Build Status](https://travis-ci.org/MakeNowJust/bloem.js.svg?branch=master)](https://travis-ci.org/MakeNowJust/bloem.js) [![Coverage Status](https://coveralls.io/repos/MakeNowJust/bloem.js/badge.png?branch=master)](https://coveralls.io/r/MakeNowJust/bloem.js?branch=master) [![npm version](https://badge.fury.io/js/bloem.js.svg)](https://www.npmjs.com/package/bloem.js)
+= = =
 
 Processing events and actions like Gardening in JavaScript.
 
-##bloem?
+bloem?
+- - -
 
 __bloem__ in Dutch means _flower_ in English.  So, this library provide gradening like programming.
 
 
-##Let's install!
+Let's install!
+- - -
 
 ```console
 $ npm install --save bloem.js
@@ -15,7 +18,8 @@ or
 $ bower install --save bloem.js
 ```
 
-##First example
+First example
+- - -
 
 ```javascript
 var
@@ -66,7 +70,8 @@ tuin = hoos.connect(logger);
 // so logger tuin display results reactively.
 ```
 
-##TODO
+TODO
+- - -
 
   - [ ] make a document
   - [x] covers all api with tests
@@ -74,10 +79,11 @@ tuin = hoos.connect(logger);
   - [ ] start a browser test
 
 
-##License
+License
+- - -
 
 ```
-Copyright 2014-2015 TSUYUSATO Kitsune 
+Copyright 2014-2015 TSUYUSATO Kitsune
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -89,5 +95,5 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-lim itations under the License. 
+lim itations under the License.
 ```
