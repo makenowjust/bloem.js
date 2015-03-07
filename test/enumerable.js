@@ -222,7 +222,9 @@ describe('bloem', function () {
           } else {
             expect(error).to.be.null;
             expect(result).to.equal(results[i-2]);
-            done();
+            if (i-1 >= results.length) {
+              done();
+            }
           }
         });
         pomp.connect(reduce).connect(tuin);
