@@ -205,7 +205,7 @@ describe('bloem', function () {
 
       it('should call as async.', function (done) {
         var
-        pomp = bloem.fromArray([0, 4]), results = [4], i = 0,
+        pomp = bloem.fromArray([0, 2, 4]), results = [2, 6], i = 0,
         err = ['error'], i = 0,
         reduce = bloem.reduce(function (sum, i, next) {
           setTimeout(function () {
@@ -475,7 +475,7 @@ describe('bloem', function () {
 
       it('should call as async.', function (done) {
         var
-        pomp = bloem.fromArray([0, 2]), results = [0], i = 0,
+        pomp = bloem.fromArray([0, 2, 4]), results = [0, 2], i = 0,
         err = ['error'], i = 0,
         reduce = bloem.reduceMap(function (sum, i, next) {
           console.log(sum, i);
