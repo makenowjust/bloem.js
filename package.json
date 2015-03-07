@@ -1,13 +1,18 @@
 {
   "name": "bloem.js",
   "description": "Processing events and actions like Gardening in JavaScript.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "license": "Apache-2.0",
   "author": "TSUYUSATO Kitsune <make.just.on@gmail.com>",
   "repository": "https://github.com/MakeNowJust/bloem.js.git",
   "homepage": "https://github.com/MakeNowJust/bloem.js",
   "bugs": "https://github.com/MakeNowJust/bloem.js/issues",
-  "keywords": ["flow", "control", "async", "bloem"],
+  "keywords": [
+    "flow",
+    "control",
+    "async",
+    "bloem"
+  ],
   "files": [
     "README.md",
     "index.js",
