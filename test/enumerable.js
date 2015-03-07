@@ -480,7 +480,6 @@ describe('bloem', function () {
         pomp = bloem.fromArray([0, 2, 4]), results = [0, 2], i = 0,
         err = ['error'], i = 0,
         reduce = bloem.reduceMap(function (sum, i, next) {
-          console.log(sum, i);
           setTimeout(function () {
             if (i === 0) {
               next(err);
