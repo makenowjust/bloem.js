@@ -114,7 +114,7 @@ Pomp.prototype.raise = function raise(error) {
 
 
 // class Hoos
-// `Pomp' in Dutch means `Pump' in English.
+// `Hoos' in Dutch means `hose' in English.
 
 function Hoos(handler) {
   if (!(this instanceof Hoos)) return new Hoos(handler);
