@@ -308,7 +308,7 @@ Enumerable.reduce = function reduce(iter, init) {
   var
   state = init;
 
-  return new Hoos(function handler(error, data, next) {
+  return new SeqHoos(function handler(error, data, next) {
     if (error) return next(error);
     iter(state, data, function reduceNext(error, update) {
       if (error) return next(error);
@@ -378,7 +378,7 @@ Enumerable.reduceMap = function (iter, init) {
   var
   state = init;
 
-  return new Hoos(function handler(error, data, next) {
+  return new SeqHoos(function handler(error, data, next) {
     if (error) return next(error);
     iter(state, data, function iterNext(error, update, result) {
       if (error) return next(error);
