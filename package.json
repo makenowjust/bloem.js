@@ -7,6 +7,12 @@
   "repository": "https://github.com/MakeNowJust/bloem.js.git",
   "homepage": "https://github.com/MakeNowJust/bloem.js",
   "bugs": "https://github.com/MakeNowJust/bloem.js/issues",
+  "keywords": ["flow", "control", "async", "bloem"],
+  "files": [
+    "README.md",
+    "index.js",
+    "src/*.js",
+  ],
   "main": "index.js",
   "scripts": {
     "test": "mocha",
