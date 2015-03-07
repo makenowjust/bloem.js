@@ -11,7 +11,7 @@
   "files": [
     "README.md",
     "index.js",
-    "src/*.js",
+    "src/*.js"
   ],
   "main": "index.js",
   "scripts": {
