@@ -22,20 +22,26 @@ bloem = require('..');
 
 describe('bloem', function () {
 
-  describe('.SeqHoos', function () {
+  describe('.LimitedHoos', function () {
     var
     hoos;
 
     beforeEach(function () {
-      hoos = new bloem.SeqHoos();
+      hoos = new bloem.LimitedHoos();
     });
 
-    it('should return new instance without `new\'', function () {
-      expect(bloem.SeqHoos()).to.be.an.instanceOf(bloem.SeqHoos);
+    it('should return new instance without `new\'.', function () {
+      expect(bloem.LimitedHoos()).to.be.an.instanceOf(bloem.LimitedHoos);
     });
 
     it('should call `connect\' method.', function () {
       expect(hoos).to.respondTo('connect');
+    });
+
+    it('should set first argument as `limited\'.', function () {
+      expect(bloem.LimitedHoos(0).limit).to.equal(0);
+      expect(bloem.LimitedHoos(1).limit).to.equal(1);
+      expect(bloem.LimitedHoos(2).limit).to.equal(2);
     });
 
     describe('#onData', function () {
@@ -44,7 +50,7 @@ describe('bloem', function () {
         var
         data = ['data'],
         pomp = new bloem.Pomp(),
-        hoos = new bloem.SeqHoos(function (err, result) {
+        hoos = new bloem.LimitedHoos(1, function (err, result) {
           expect(err).to.be.null;
           expect(result).to.equal(data);
           done();
@@ -58,7 +64,7 @@ describe('bloem', function () {
         var
         data = ['data'],
         pomp = new bloem.Pomp(),
-        hoos = new bloem.SeqHoos(function (err) {
+        hoos = new bloem.LimitedHoos(1, function (err) {
           expect(err).to.equal(data);
           done();
         });
@@ -71,7 +77,7 @@ describe('bloem', function () {
         var
         data = ['data'],
         pomp = new bloem.Pomp(),
-        hoos = new bloem.SeqHoos(function (err, result) {
+        hoos = new bloem.LimitedHoos(1, function (err, result) {
           expect(err).to.be.null;
           expect(result).to.equal(data);
         });
@@ -84,7 +90,7 @@ describe('bloem', function () {
         var
         data = ['data'],
         pomp = new bloem.Pomp(),
-        hoos = new bloem.SeqHoos(function (err) {
+        hoos = new bloem.LimitedHoos(1, function (err) {
           expect(err).to.equal(data);
         });
         pomp.connect(hoos);
