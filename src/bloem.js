@@ -53,8 +53,8 @@ function Connecter() {
 
 // methods of class Connecter
 
-Connecter.inherits = function inherits(ctor, proto) {
-  ctor.prototype = Object.create(proto || Connecter.prototype, {
+Connecter.inherits = function inherits(ctor, clazz) {
+  ctor.prototype = Object.create((clazz || Connecter).prototype, {
     constructor: {
       value: ctor,
       enumerable: false,
@@ -136,31 +136,34 @@ Hoos.prototype.onData = function onData(error, data) {
 };
 
 
-// class SeqHoos
-// Sequential Hoos.
+// class LimitedHoos
+// Limited Hoos.
 
-function SeqHoos(handler) {
-  if (!(this instanceof SeqHoos)) return new SeqHoos(handler);
-  Connecter.call(this);
+function LimitedHoos(limit, handler) {
+  if (!(this instanceof LimitedHoos)) return new LimitedHoos(limit, handler);
+  Hoos.call(this, handler);
 
-  this._handler = handler;
+  this.limit = limit;
   this._queue = [];
 }
 
-Connecter.inherits(SeqHoos, Hoos.prototype);
+Connecter.inherits(LimitedHoos, Hoos);
 
-// methods of class SeqHoos
+// methods of class LimitedHoos
 
-SeqHoos.prototype.onData = function onData(error, data) {
+LimitedHoos.prototype.onData = function onData(error, data) {
   this._queue.push([error, data]);
 
-  if (this._queue.length === 1) {
+  if (this._queue.length <= this.limit) {
     this._sendData();
   }
 };
 
-SeqHoos.prototype._sendData = function _sendData() {
-  this._handler(this._queue[0][0], this._queue[0][1], function next(error, data) {
+LimitedHoos.prototype._sendData = function _sendData() {
+  var
+  i = Math.min(this.limit - 1, this._queue.length - 1);
+
+  this._handler(this._queue[i][0], this._queue[i][1], function next(error, data) {
     this._targets.forEach(function loop(target) {
       target.onData(error, data);
     });
@@ -193,7 +196,7 @@ Tuin.prototype.onData = function onData(error, data) {
 bloem.Connecter = Connecter;
 bloem.Pomp = Pomp;
 bloem.Hoos = Hoos;
-bloem.SeqHoos = SeqHoos;
+bloem.LimitedHoos = LimitedHoos;
 bloem.Tuin = Tuin;
 
 
