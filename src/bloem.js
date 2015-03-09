@@ -288,7 +288,7 @@ Enumerable.map = function map(iter) {
   iter = wrapIter(iter);
 
   return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     iter(data, next);
   });
 };
@@ -297,9 +297,9 @@ Enumerable.filter = function filter(iter) {
   iter = wrapIter(iter);
 
   return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     iter(data, function filterNext(error, flag) {
-      if (error) return next(error);
+      if (error !== null) return next(error);
       if (flag) {
         next(null, data);
       }
@@ -314,9 +314,9 @@ Enumerable.reduce = function reduce(iter, init) {
   state = init;
 
   return new LimitedHoos(1, function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     iter(state, data, function reduceNext(error, update) {
-      if (error) return next(error);
+      if (error !== null) return next(error);
       state = update;
       next(null, state);
     });
@@ -334,9 +334,9 @@ Enumerable.flatMap = function flatMap(iter) {
   iter = wrapIter(iter);
 
   return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     iter(data, function flatMapNext(error, target) {
-      if (error) return next(error);
+      if (error !== null) return next(error);
       target.connect(new Hoos(next));
     });
   });
@@ -351,7 +351,7 @@ Enumerable.rescue = function rescue(iter, dataNextFlag) {
   iter = wrapIter(iter);
 
   return new Hoos(function handler(error, data, next) {
-    if (error) return iter(error, next);
+    if (error !== null) return iter(error, next);
     if (dataNextFlag) return next(null, data);
   });
 };
@@ -362,9 +362,9 @@ Enumerable.when = function when(cond, then, otherwise) {
   otherwise = wrapIter(otherwise);
 
   return new Hoos(function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     cond(data, function whenNext(error, condition) {
-      if (error) return next(error);
+      if (error !== null) return next(error);
       if (condition) {
         then(data, next);
       } else {
@@ -381,9 +381,9 @@ Enumerable.reduceMap = function (iter, init) {
   state = init;
 
   return new LimitedHoos(1, function handler(error, data, next) {
-    if (error) return next(error);
+    if (error !== null) return next(error);
     iter(state, data, function iterNext(error, update, result) {
-      if (error) return next(error);
+      if (error !== null) return next(error);
       state = update;
       next(null, result);
     });
