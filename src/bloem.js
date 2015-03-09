@@ -77,6 +77,7 @@ Connecter.prototype.connect = function connect(target) {
 
 function Pomp() {
   if (!(this instanceof Pomp)) return new Pomp();
+
   Connecter.call(this);
 }
 
@@ -205,8 +206,8 @@ bloem.Tuin = Tuin;
 var
 slice = Array.prototype.slice,
 wrapIter = bloem.wrapIter = function wrapIter(iter, baseLength, resultLength) {
-  baseLength = baseLength == null ? 1 : baseLength;
-  resultLength = resultLength == null ? 1 : resultLength;
+  baseLength = typeof baseLength === 'undefined' ? 1 : baseLength;
+  resultLength = typeof resultLength === 'undefined' ? 1 : resultLength;
 
   return iter.length > baseLength ? iter :
     function wrappedIter() {
@@ -350,11 +351,8 @@ Enumerable.rescue = function rescue(iter, dataNextFlag) {
   iter = wrapIter(iter);
 
   return new Hoos(function handler(error, data, next) {
-    if (error != null) {
-      iter(error, next);
-    } else if (dataNextFlag) {
-      next(null, data);
-    }
+    if (error) return iter(error, next);
+    if (dataNextFlag) return next(null, data);
   });
 };
 

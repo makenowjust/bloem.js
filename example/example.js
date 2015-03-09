@@ -1,4 +1,4 @@
-// Copyright 2014-2015 TSUYUSATO Kitsune 
+// Copyright 2014-2015 TSUYUSATO Kitsune
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License. 
+// limitations under the License.
 
 var
 fs = require('fs'),
@@ -48,8 +48,9 @@ hoos = hoos.connect(parseNum).connect(calcSum);
 var
 logger = bloem.forEach(function logger(s) {
   console.log(s);
-}),
-tuin = hoos.connect(logger);
+});
+
+hoos.connect(logger);
 
 // final, outputs is:
 //   1
