@@ -29,8 +29,8 @@ describe('bloem', function () {
       }).to.throw(Error);
     });
 
-    function clazz(head, tail) {
-      bloem.Connecter.call(this, head, tail);
+    function clazz() {
+      bloem.Connecter.call(this);
     }
     bloem.Connecter.inherits(clazz);
 
@@ -72,12 +72,20 @@ describe('bloem', function () {
         expect(getTargets(inst)).to.have.length(1);
       });
 
-      it('should be added target into head.');
+      it('should be added target into head.', function () {
+        var
+        head = new clazz(),
+        inst = head.connect(new clazz());
 
-      it('should add target into tail.');
+        expect(getHead(head)).to.equal(head);
+      });
 
       function getTargets(inst) {
         return inst._targets;
+      }
+
+      function getHead(inst) {
+        return inst._head;
       }
     });
 
