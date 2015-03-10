@@ -49,6 +49,7 @@ function Connecter() {
   }
 
   this._targets = [];
+  this._head = this;
 }
 
 // methods of class Connecter
@@ -65,7 +66,11 @@ Connecter.inherits = function inherits(ctor, clazz) {
 };
 
 Connecter.prototype.connect = function connect(target) {
-  this._targets.push(target);
+  target = Object.create(target);
+
+  this._targets.push(target._head || target);
+  target._head = this._head;
+
   return target;
 };
 
