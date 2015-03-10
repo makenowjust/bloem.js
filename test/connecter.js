@@ -57,11 +57,11 @@ describe('bloem', function () {
         inst = new clazz();
       });
 
-      it('should return passed object.', function () {
+      it('should not return passed object.', function () {
         var
         uniq = {};
 
-        expect(inst.connect(uniq)).to.equal(uniq);
+        expect(inst.connect(uniq)).not.to.equal(uniq);
       });
 
       it('should add target.', function () {
@@ -69,7 +69,7 @@ describe('bloem', function () {
         uniq = {};
 
         inst.connect(uniq);
-        expect(getTargets(inst)).to.have.length(1).and.include(uniq);
+        expect(getTargets(inst)).to.have.length(1);
       });
 
       it('should be added target into head.');
