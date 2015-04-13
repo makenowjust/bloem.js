@@ -74,6 +74,31 @@ Connecter.prototype.connect = function connect(target) {
   return target;
 };
 
+// delegate pomp method
+
+'send sendSync'.split(' ').forEach(function loop(name) {
+  Connecter.prototype[name] = function syncDelegate(data) {
+    (this._head || this)[name](data);
+  };
+  Connecter.prototype[name].displayName = name;
+});
+
+'raise raiseSync'.split(' ').forEach(function loop(name) {
+  Connecter.prototype[name] = function raiseDelegate(err) {
+    (this._head || this)[name](err);
+  };
+  Connecter.prototype[name].displayName = name;
+});
+
+'sendAndRaise sendAndRaiseSync'.split(' ').forEach(function loop(name) {
+  Connecter.prototype[name] = function sendAndRaiseDelegate(err, data) {
+    (this._head || this)[name](err, data);
+  };
+  Connecter.prototype[name].displayName = name;
+});
+
+
+
 
 // medthods
 
