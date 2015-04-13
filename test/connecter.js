@@ -89,6 +89,46 @@ describe('bloem', function () {
       }
     });
 
+    'send raise'.split(' ').forEach(function (name) {
+      ['', 'Sync'].forEach(function (suffix) {
+        describe('#' + name + suffix, function () {
+
+          it('should delegate to head.', function () {
+            var
+            id = {},
+            head = new clazz(),
+            inst = head.connect(new clazz());
+
+            head[name + suffix] = function (data) {
+              expect(data).to.equal(id);
+            };
+
+            inst[name + suffix](id);
+          });
+        });
+      });
+    });
+
+    'sendAndRaise sendAndRaiseSync'.split(' ').forEach(function (name) {
+      describe('#' + name, function () {
+
+        it('should delegate to head', function () {
+          var
+          id1 = {}, id2 = {},
+          head = new clazz(),
+          inst = head.connect(new clazz());
+
+          head[name] = function (err, data) {
+            expect(err).to.equal(id1);
+            expect(data).to.equal(id2);
+          };
+
+          inst[name](id1, id2);
+        });
+
+      });
+    });
+
   });
 
 });
