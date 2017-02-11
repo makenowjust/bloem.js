@@ -1,6 +1,8 @@
 bloem.js
 ===
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/MakeNowJust/bloem.js.svg)](https://greenkeeper.io/)
+
 Processing events and actions like Gardening in JavaScript.
 
 [![npm](https://nodei.co/npm/bloem.js.png)](https://nodei.co/npm/bloem.js/)
